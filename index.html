@@ -3,51 +3,247 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Markdown Converter</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css">
+    <title>Markdown Tabs</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github.min.css">
     <style>
         body {
-            font-family: sans-serif;
-            padding: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7f6;
+            color: #333;
         }
-        #markdown-output {
-            margin-top: 20px;
-            border: 1px solid #ccc;
+        .container {
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #ecf0f1;
+        }
+        .tabs button {
+            background-color: #ecf0f1;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 12px 20px;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+            margin: 0 5px;
+            border-radius: 5px 5px 0 0;
+            color: #7f8c8d;
+        }
+        .tabs button:hover {
+            background-color: #bdc3c7;
+        }
+        .tabs button.active {
+            background-color: #fff;
+            color: #2c3e50;
+            border-bottom: 2px solid #2980b9;
+        }
+        .tab-content {
+            display: none;
             padding: 15px;
         }
-        pre {
-            background-color: #f4f4f4;
-            padding: 10px;
-            border-radius: 5px;
-            overflow-x: auto;
+        .tab-content.active {
+            display: block;
         }
-        code {
-            font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+        #markdown-source {
+            width: 100%;
+            min-height: 400px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 14px;
+            resize: vertical;
+            background-color: #fdfdfe;
+            line-height: 1.5;
+        }
+        #markdown-output {
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 5px;
+            background-color: #fdfdfe;
+            line-height: 1.6;
+            overflow-wrap: break-word;
+        }
+        #markdown-output h1, #markdown-output h2, #markdown-output h3 {
+            color: #2c3e50;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 5px;
+        }
+        #markdown-output a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        #markdown-output a:hover {
+            text-decoration: underline;
+        }
+        #markdown-output pre {
+            background-color: #ecf0f1;
+            padding: 12px;
+            border-radius: 4px;
+            overflow-x: auto;
+            border: 1px solid #e0e0e0;
+        }
+        #markdown-output pre code {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 13px;
+            display: block;
+            padding: 0;
+        }
+        #markdown-output blockquote {
+            border-left: 4px solid #bdc3c7;
+            padding-left: 15px;
+            color: #7f8c8d;
+            margin-left: 0;
+            font-style: italic;
+        }
+        #markdown-output ul, #markdown-output ol {
+            margin-left: 20px;
+            padding-left: 10px;
+        }
+        #markdown-output li {
+            margin-bottom: 8px;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+            display: block;
+            margin: 15px auto;
         }
     </style>
 </head>
 <body>
-    <h1>Markdown Converter</h1>
+    <div class="container">
+        <h1>Markdown Editor & Previewer</h1>
 
-    <div id="markdown-output"></div>
+        <div class="tabs" id="markdown-tabs">
+            <button class="tab active" onclick="openTab(event, 'rendered')">Rendered HTML</button>
+            <button class="tab" onclick="openTab(event, 'source')">Markdown Source</button>
+        </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/marked@5.0.0/marked.min.js"></script>
+        <div id="rendered" class="tab-content active">
+            <div id="markdown-output"></div>
+        </div>
+
+        <div id="source" class="tab-content">
+            <textarea id="markdown-source"># Welcome to the Markdown Editor!
+
+This is a sample Markdown text. You can type your Markdown content here, and see the live preview on the other tab.
+
+## Features
+
+-   **Tabbed Navigation:** Easily switch between source and rendered views.
+-   **Live Sync:** Content is kept in sync across tabs.
+-   **Syntax Highlighting:** Code blocks are highlighted using `highlight.js`.
+
+### Example Code Block:
+
+```javascript
+function greet(name) {
+  console.log(`Hello, ${name}!\nThis is some example JS code.`);
+}
+
+greet('World');
+```
+
+### Lists:
+
+*   Item 1
+*   Item 2
+    *   Sub-item 2.1
+
+1.  Numbered Item A
+2.  Numbered Item B
+
+### Blockquote:
+
+> This is a blockquote. It can be used for quoting text from other sources.
+
+### Images:
+
+![Sample Image](https://via.placeholder.com/300x150.png?text=Sample+Image)
+
+_Note: For local images, ensure they are correctly path-referenced or use base64 encoding directly in the `src` attribute of the `img` tag if embedding them in the Markdown itself._
+
+### File Attachments:
+
+**Text File:**
+
+```text
+This is the content of a sample text file.
+It demonstrates how text attachments can be displayed.
+```
+
+**Downloadable Files:**
+
+*   [Sample PDF File](data:application/pdf;base64,JVBERi0xLjQKJcTl0NggMSAwIG9iago8PC9UeXBlL0NhdGFsb2cvUGFnZXMgMiAwIFI+PgplbmRvYmoKMiAwIG9iago8PC9UeXBlL1BhZ2VzL0tpZHNbIDMgMCBSXQ
+L0NvdW50IDU+PgplbmRvYmoKMyAwIG9iago8PC9UeXBlL1BhZ2UvTWVkaWFCb3hbMCAwIDYxMiA3OTJdP...)
+    *Note: Base64 encoded PDF content is truncated for brevity. A real file would have a complete base64 string.* 
+*   [Another File (e.g. zip)](javascript:void(0);)
+    *Replace '#' with actual file URL or use Blob for dynamic links.*
+</textarea>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const markdownText = `Hello world!\n\nThis is a test markdown file.\n\nImportant:
-- Embed all image attachments directly in index.html using <img src=\"data:image/png;base64,..."> if required and donot add anything extra for the base64 code(like using frnces ///,\
-	//,etc)
-- Display text file attachments in the app.
-- Provide download links for other files.`;
-            
-            const html = marked.parse(markdownText);
-            document.getElementById('markdown-output').innerHTML = html;
-            
-            document.querySelectorAll('pre code').forEach((block) => {
-                hljs.highlightBlock(block);
-            });
+            const markdownSource = document.getElementById('markdown-source');
+            const markdownOutput = document.getElementById('markdown-output');
+            const tabs = document.getElementById('markdown-tabs');
+
+            // Function to render Markdown and highlight code
+            const renderMarkdown = () => {
+                const markdownText = markdownSource.value;
+                const html = marked.parse(markdownText);
+                markdownOutput.innerHTML = html;
+                
+                // Highlight all code blocks
+                markdownOutput.querySelectorAll('pre code').forEach((block) => {
+                    hljs.highlightBlock(block);
+                });
+            };
+
+            // Initial render on page load
+            renderMarkdown();
+
+            // Update preview in real-time as user types
+            markdownSource.addEventListener('input', renderMarkdown);
         });
+
+        // Tab switching logic
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+                tabcontent[i].classList.remove('active');
+            }
+            tablinks = document.getElementsByClassName("tab");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].classList.remove('active');
+            }
+            document.getElementById(tabName).style.display = "block";
+            document.getElementById(tabName).classList.add('active');
+            evt.currentTarget.classList.add('active');
+        }
     </script>
 </body>
 </html>
