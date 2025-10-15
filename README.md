@@ -1,23 +1,22 @@
-# Markdown Converter Application
+# Markdown Editor with Tabs
 
-This is a static web application that converts Markdown text into HTML. It uses the `marked` library for Markdown parsing and `highlight.js` for syntax highlighting of code blocks.
+This is a simple Markdown editor application that allows you to switch between viewing the rendered HTML and the source Markdown. It uses the `marked` library for Markdown conversion and `highlight.js` for code block syntax highlighting.
 
 ## Features
 
-- Converts Markdown input to HTML.
-- Renders HTML within the `#markdown-output` element.
-- Applies syntax highlighting to code blocks using `highlight.js`.
+-   **Tabbed Interface:** Switch between 'Rendered HTML' and 'Markdown Source' views.
+-   **Live Preview:** The HTML view updates as you type in the Markdown source.
+-   **Syntax Highlighting:** Code blocks in the rendered output are syntax highlighted.
 
 ## How to Use
 
-1.  Clone the repository.
+1.  Clone this repository.
 2.  Open `index.html` in your web browser.
 
-The application will automatically fetch and display the converted Markdown content.
+## Development Notes
 
-## Development
-
-This project is deployed using GitHub Pages. The `index.html` file contains all the necessary HTML, CSS, and JavaScript.
+-   The application is a single HTML file (`index.html`) for simplicity and easy deployment via GitHub Pages.
+-   External libraries for Markdown parsing (`marked`) and syntax highlighting (`highlight.js`) are included via CDN.
 
 ## Dependencies
 
