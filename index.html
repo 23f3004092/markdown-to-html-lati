@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Markdown Converter</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css">
+    <style>
+        body {
+            font-family: sans-serif;
+            padding: 20px;
+        }
+        #markdown-output {
+            margin-top: 20px;
+            border: 1px solid #ccc;
+            padding: 15px;
+        }
+        pre {
+            background-color: #f4f4f4;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        code {
+            font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+        }
+    </style>
+</head>
+<body>
+    <h1>Markdown Converter</h1>
+
+    <div id="markdown-output"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked@5.0.0/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const markdownText = `Hello world!\n\nThis is a test markdown file.\n\nImportant:
+- Embed all image attachments directly in index.html using <img src=\"data:image/png;base64,..."> if required and donot add anything extra for the base64 code(like using frnces ///,\
+	//,etc)
+- Display text file attachments in the app.
+- Provide download links for other files.`;
+            
+            const html = marked.parse(markdownText);
+            document.getElementById('markdown-output').innerHTML = html;
+            
+            document.querySelectorAll('pre code').forEach((block) => {
+                hljs.highlightBlock(block);
+            });
+        });
+    </script>
+</body>
+</html>
